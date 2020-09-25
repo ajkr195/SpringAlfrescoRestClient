@@ -11,6 +11,8 @@ public class RestTemplateExample {
 
 	public static void main(String[] args) {
 		getFolderContentList();
+//		somePOSTExample();
+//		somePUTExample();
 	}
 
 	private static void getFolderContentList() {
@@ -28,7 +30,9 @@ public class RestTemplateExample {
 			// SetBasicAuthentication
 			headers.setBasicAuth("admin", "admin");
 
+			// GET Request
 			HttpEntity<String> entity = new HttpEntity<String>(headers);
+			// GET Method (response)
 			ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
 
 			// Get response for GET method
@@ -40,6 +44,72 @@ public class RestTemplateExample {
 			System.out.println("Error occurred...");
 			e.printStackTrace();
 		}
+
+	}
+
+	private static void somePOSTExample() {
+		String uri = "http://someservername:8080/alfresco/api/-default-/public/gs/versions/1/files/12341234-1234-1234-1234-123412341234/declare?hideRecord=false";
+
+		RestTemplate restTemplate = new RestTemplate();
+
+		try {
+			// HttpHeaders
+			HttpHeaders headers = new HttpHeaders();
+
+			// SetContentType
+			headers.setContentType(MediaType.APPLICATION_JSON);
+
+			// SetBasicAuthentication
+			headers.setBasicAuth("admin", "admin");
+
+			// POST Request
+			HttpEntity<String> request = new HttpEntity<String>(headers);
+			// POST Method (response)
+			ResponseEntity<String> response = restTemplate.postForEntity(uri, request, String.class);
+
+			// Get response for GET method
+			System.out.println("Response status - " + response.getStatusCode());
+			System.out.println("Response has body? - " + response.hasBody());
+			System.out.println("Response body - " + response.getBody());
+
+		} catch (Exception e) {
+			System.out.println("Error occurred...");
+			e.printStackTrace();
+		}
+
+	}
+
+	private static String somePUTExample() {
+		String uri = "http://someservername:8080/alfresco/api/-default-/public/gs/versions/1/records/";
+
+		RestTemplate restTemplate = new RestTemplate();
+
+		try {
+			// HttpHeaders
+			HttpHeaders headers = new HttpHeaders();
+
+			// SetContentType
+			headers.setContentType(MediaType.APPLICATION_JSON);
+
+			// SetBasicAuthentication
+			headers.setBasicAuth("admin", "admin");
+
+			// POST Request
+			HttpEntity<String> entity = new HttpEntity<String>(headers);
+			// POST Method (response)
+			HttpEntity<String[]> response = restTemplate.exchange(uri, HttpMethod.PUT, entity, String[].class);
+
+			// Get response for GET method
+			System.out.println("Response has body? - " + response.hasBody());
+			System.out.println("Response body - " + response.getBody());
+
+			return restTemplate.exchange(uri, HttpMethod.PUT, entity, String.class).getBody();
+
+		} catch (Exception e) {
+			System.out.println("Error occurred...");
+			e.printStackTrace();
+		}
+		return null;
 
 	}
 
