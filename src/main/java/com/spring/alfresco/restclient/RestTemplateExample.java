@@ -1,4 +1,4 @@
-package com.spring.amazon.s3.bucket;
+package com.spring.alfresco.restclient;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
